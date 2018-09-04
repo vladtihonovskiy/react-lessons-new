@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ReactDOM from "react-dom";
+import Box from "./Box/Box";
 
 class App extends React.Component {
 	constructor(props) {
@@ -24,7 +25,11 @@ class App extends React.Component {
 
 		this.setState({
 			text:  this.refs.textInputSmartInput.value
+		}, () => {
+			console.log("state inside callback", this.state.text);
 		});
+		console.log("state outside callback", this.state.text);
+
 
 		this.textInputSmartInputCreating.current.value = "Reaf save on constructor";
 	}
@@ -50,6 +55,13 @@ class App extends React.Component {
 		//console.log(this.textInputSmartInput);
 		return (
 			<div>
+
+
+				<Box color={"red"} width={"150px"} height={"150px"}>
+					<Box color={"blue"} width={"15px"} height={"15px"} />
+					<Box color={"black"} width={"50px"} height={"50px"} />
+				</Box>
+
 				<input
 					type="text"
 					onChange={this.focusTextInput}
