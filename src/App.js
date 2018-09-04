@@ -3,68 +3,32 @@ import logo from './logo.svg';
 import './App.css';
 import ReactDOM from "react-dom";
 
+import Children from "./component/Children";
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.textInputSmartInputCreating = React.createRef();
-
-		this.text = "";
-		// create a ref to store the textInput DOM element
-		//this.textInputSmartInput = 5;
+		this.state = {
+			text: ''
+		}
 	}
 
-	state = {
-		text: ""
-	}
-
-	componentDidMount() {
-		this.refs.textInputSmartInput.value = 15;
-		this.refs.textInputSmartInput.focus();
-
+	handlePrintText(text) {
 		this.setState({
-			text:  this.refs.textInputSmartInput.value
+			text: text
 		});
-
-		this.textInputSmartInputCreating.current.value = "Reaf save on constructor";
-	}
-
-	focusTextInput = () => {
-
-		console.log(this.refs);
-
-		this.setState({
-			text:  this.refs.textInputSmartInput.value
-		});
-		// Explicitly focus the text input using the raw DOM API
-		// // Note: we're accessing "current" to get the DOM node
-		// console.log(this.refs);
-		// this.refs.textInput.focus();
-
-		this.textInputSmartInputCreating.current.value = this.refs.textInputSmartInput.value;
 	}
 
 	render() {
-		// tell React that we want to associate the <input> ref
-		// with the `textInput` that we created in the constructor
-		//console.log(this.textInputSmartInput);
-		return (
+		return(
 			<div>
-				<input
-					type="text"
-					onChange={this.focusTextInput}
-					ref={"textInputSmartInput"} />
-
-				<input
-					type="text"
-					onChange={this.focusTextInput}
-					ref={this.textInputSmartInputCreating} />
-
-				<input type="text" value={this.state.text} />
-				<input
-					type="button"
-					value="Focus the text input"
-					onClick={this.focusTextInput}
+				<h1>Test</h1>
+				<div style={{padding: '10px 20px', width: '300px', textAlign: 'center', border: '1px dashed #cccccc'}}>{(this.state.text!='') ? this.state.text : <span>&nbsp;</span>}</div>
+				<br />
+				<Children
+					text={this.state.text}
+					onPrintText={this.handlePrintText.bind(this)}
 				/>
 			</div>
 		);
