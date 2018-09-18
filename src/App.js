@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import ReactDOM from "react-dom";
 import Box from "./Box/Box";
+import Circle from "./Circle/Circle";
 
 class App extends React.Component {
 	constructor(props) {
@@ -60,6 +61,7 @@ class App extends React.Component {
 				<Box color={"red"} width={"150px"} height={"150px"}>
 					<Box color={"blue"} width={"15px"} height={"15px"} />
 					<Box color={"black"} width={"50px"} height={"50px"} />
+					<Circle color={"yellow"} size={"50px"} />
 				</Box>
 
 				<input
