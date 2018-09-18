@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import Loader from '../Loader';
+import "./index.css"
 class HomePage extends Component {
 	state = {
 		isLoading: true,
@@ -15,21 +18,26 @@ class HomePage extends Component {
 		//             JsonMes: json
 		//         }))
 		// );
-		let result = await fetch('https://jsonplaceholder.typicode.com/todos/');
+		let result = await fetch('https://jsonplaceholder.typicode.com/posts/');
 		result = await result.json();
 		this.setState({
 			jsonMasses: result,
 			isLoading: false
-		})
+		});
 		console.log('Запрос отправлен ?');
 	}
 	returnTitle = (obj) => {
 		const { title, id } = obj;
-		return <ul key={id} >{title} ID={id}</ul>
+
+		return(
+			<div key={id} className={"post-wrapper"} >
+				<Link to={`/homepage/${id}`} >{ title }</Link>
+			</div>
+		)
 	}
 	render() {
 		const { isLoading, jsonMasses } = this.state;
-		console.log(this.state.jsonMasses);
+
 		return(
 			<div>
 				{ isLoading ?

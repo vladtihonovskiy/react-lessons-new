@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import About from "./containers/About";
-import Home from "./containers/Home";
-import HomeShowId from "./containers/HomeShowId";
+import HomePage from "./containers/Home";
+import HomePageWithId from "./containers/HomePageWithId";
 
 
 class App extends Component {
@@ -12,9 +12,9 @@ class App extends Component {
     return (
 		<BrowserRouter>
 			<Switch>
-				<Route exact path={"/"} component={Home} />
-				<Route exact path={"/home"} component={Home} />
-				<Route path={"/home/:id"} component={HomeShowId} />
+				<Route exact path={"/"} component={HomePage} />
+				<Route exact path={"/homepage"} component={HomePage} />
+				<Route path={"/homepage/:id"} component={HomePageWithId} />
 				<Route path={"/about"} component={About} />
 			</Switch>
 		</BrowserRouter>
