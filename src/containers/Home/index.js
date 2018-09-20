@@ -1,31 +1,36 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { array } from "prop-types";
 
 import Loader from '../Loader';
 import "./index.css"
 class HomePage extends Component {
-	state = {
-		isLoading: true,
-		jsonMasses: [],
+	static propTypes = {
+		posts: array.isRequired
 	}
 
-	async componentDidMount() {
-		// console.log(
-		//     fetch('https://jsonplaceholder.typicode.com/todos/')
-		//         .then(response => response.json())
-		//         .then(json => this.setState({
-		//             isLoading: false,
-		//             JsonMes: json
-		//         }))
-		// );
-		let result = await fetch('https://jsonplaceholder.typicode.com/posts/');
-		result = await result.json();
-		this.setState({
-			jsonMasses: result,
-			isLoading: false
-		});
-		console.log('Запрос отправлен ?');
-	}
+	// state = {
+	// 	isLoading: true,
+	// 	jsonMasses: [],
+	// }
+
+	// async componentDidMount() {
+	// 	// console.log(
+	// 	//     fetch('https://jsonplaceholder.typicode.com/todos/')
+	// 	//         .then(response => response.json())
+	// 	//         .then(json => this.setState({
+	// 	//             isLoading: false,
+	// 	//             JsonMes: json
+	// 	//         }))
+	// 	// );
+	// 	let result = await fetch('https://jsonplaceholder.typicode.com/posts/');
+	// 	result = await result.json();
+	// 	this.setState({
+	// 		jsonMasses: result,
+	// 		isLoading: false
+	// 	});
+	// 	console.log('Запрос отправлен ?');
+	// }
 	returnTitle = (obj) => {
 		const { title, id } = obj;
 
@@ -35,22 +40,19 @@ class HomePage extends Component {
 			</div>
 		)
 	}
+
 	render() {
-		const { isLoading, jsonMasses } = this.state;
+		const { posts } = this.props;
 
 		return(
 			<div>
-				{ isLoading ?
-					<Loader />
-					:
-					<ul>
-						{
-							jsonMasses.map(
-								jsonMassive => { return this.returnTitle(jsonMassive) }
-							)
-						}
-					</ul>
-				}
+				<ul>
+					{
+						posts.map(
+							post => { return this.returnTitle(post) }
+						)
+					}
+				</ul>
 			</div>
 		);
 	}
