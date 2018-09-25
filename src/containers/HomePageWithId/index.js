@@ -38,10 +38,9 @@ class HomePageWithId extends Component {
 		const { post } = this.props;
 
 		const { id, title, body } = post;
-
+		console.log(this.props);
 		return(
 			<div>
-
 				{/*{*/}
 					{/*isLoading ?*/}
 						{/*<Loader />*/}

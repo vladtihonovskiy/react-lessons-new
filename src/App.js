@@ -36,6 +36,7 @@ class App extends Component {
 
   render() {
 		const { posts, isLoading } = this.state;
+		console.log(posts)
     return (
 			<Fragment>
 			{
@@ -47,8 +48,8 @@ class App extends Component {
 						<Route exact path={"/homepage"} render={
 							()=><HomePage posts={posts} />
 						} />
-						<Route path={"/homepage/:id"} render={
-							(props)=><HomePageWithId {...props}  post={posts[props.match.params.id -1]} />
+						<Route path={"/homepage/:id/:type"} render={
+							(props)=><HomePageWithId {...props} post={posts[props.match.params.id -1]} />
 						} />
 						<Route path={"/about"} component={About} />
 					</Switch>
