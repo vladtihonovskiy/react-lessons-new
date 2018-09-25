@@ -5,6 +5,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import About from "./containers/About";
 import HomePage from "./containers/Home";
 import HomePageWithId from "./containers/HomePageWithId";
+import LoaderRedux from "./containers/LoaderRedux/LoaderRedux";
 
 import Loader from './containers/Loader';
 
@@ -36,7 +37,6 @@ class App extends Component {
 
   render() {
 		const { posts, isLoading } = this.state;
-		console.log(posts)
     return (
 			<Fragment>
 			{
@@ -44,7 +44,7 @@ class App extends Component {
 					<Loader />
 					:
 					<Switch>
-						<Route exact path={"/"} component={HomePage} />
+						<Route exact path={"/"} component={LoaderRedux} />
 						<Route exact path={"/homepage"} render={
 							()=><HomePage posts={posts} />
 						} />
