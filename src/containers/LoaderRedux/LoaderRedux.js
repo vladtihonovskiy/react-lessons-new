@@ -13,7 +13,6 @@ class LoaderRedux extends Component {
 		hideLoader: func,
 		showLoader: func,
 		changeLoader: func,
-
 	}
 
 	onShowLoaderBntClick = () => {
@@ -27,7 +26,7 @@ class LoaderRedux extends Component {
 
 	onChangeLoaderBtnClick = () => {
 		const { loading } = this.props;
-		this.props.changeLoader({ loader: !loading, name: "Vlad" });
+		this.props.changeLoader(!loading);
 	}
 
 	render() {
@@ -37,10 +36,6 @@ class LoaderRedux extends Component {
 
 		return(
 			<Fragment>
-				{
-					loading &&
-					<Loader />
-				}
 
 				<p> my name is { name}</p>
 

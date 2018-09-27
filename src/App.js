@@ -2,12 +2,15 @@ import React, { Component, Fragment } from 'react';
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
+import { connect } from "react-redux";
+
 import About from "./containers/About";
 import HomePage from "./containers/Home";
 import HomePageWithId from "./containers/HomePageWithId";
 import LoaderRedux from "./containers/LoaderRedux/LoaderRedux";
 
 import Loader from './containers/Loader';
+import * as appActions from "./modules/app/app.actions";
 
 
 class App extends Component {
@@ -32,32 +35,38 @@ class App extends Component {
 			posts: result,
 			isLoading: false,
 		});
+
 		console.log('Запрос отправлен ?');
+	}
+	renderLoader =() => {
+		const { loading } = this.props;
+
+		if(loading) {
+			return <Loader />
+		}
 	}
 
   render() {
 		const { posts, isLoading } = this.state;
-    return (
-			<Fragment>
-			{
-				isLoading ?
-					<Loader />
-					:
-					<Switch>
-						<Route exact path={"/"} component={LoaderRedux} />
-						<Route exact path={"/homepage"} render={
-							()=><HomePage posts={posts} />
-						} />
-						<Route path={"/homepage/:id/:type"} render={
-							(props)=><HomePageWithId {...props} post={posts[props.match.params.id -1]} />
-						} />
-						<Route path={"/about"} component={About} />
-					</Switch>
 
-			}
-			</Fragment>
-    );
+		return (
+				<Fragment>
+					{this.renderLoader()}
+						<Switch>
+							<Route exact path={"/"} component={LoaderRedux} />
+							<Route exact path={"/homepage"} component={HomePage} />
+							<Route path={"/about"} component={About} />
+						</Switch>
+				</Fragment>
+		);
   }
 }
 
-export default withRouter(App);
+
+function mapStateToProps({ app }) {
+	return {
+		loading: app.loading,
+	};
+}
+
+export default withRouter(connect(mapStateToProps, { ...appActions })(App));

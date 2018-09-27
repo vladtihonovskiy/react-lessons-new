@@ -2,35 +2,22 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { array } from "prop-types";
 
-import Loader from '../Loader';
 import "./index.css"
+import { connect } from "react-redux";
+import * as appActions from "../../modules/app/app.actions";
 class HomePage extends Component {
 	static propTypes = {
-		posts: array.isRequired
+		posts: array
 	}
 
-	// state = {
-	// 	isLoading: true,
-	// 	jsonMasses: [],
-	// }
+	static defaultProps = {
+		posts: []
+	}
 
-	// async componentDidMount() {
-	// 	// console.log(
-	// 	//     fetch('https://jsonplaceholder.typicode.com/todos/')
-	// 	//         .then(response => response.json())
-	// 	//         .then(json => this.setState({
-	// 	//             isLoading: false,
-	// 	//             JsonMes: json
-	// 	//         }))
-	// 	// );
-	// 	let result = await fetch('https://jsonplaceholder.typicode.com/posts/');
-	// 	result = await result.json();
-	// 	this.setState({
-	// 		jsonMasses: result,
-	// 		isLoading: false
-	// 	});
-	// 	console.log('Запрос отправлен ?');
-	// }
+	componentDidMount() {
+		this.props.fetchAllData();
+	}
+
 	returnTitle = (obj) => {
 		const { title, id } = obj;
 
@@ -46,15 +33,24 @@ class HomePage extends Component {
 
 		return(
 			<div>
+				HomePage
 				<ul>
-					{
+					{ posts.length !== 0 &&
 						posts.map(
-							post => { return this.returnTitle(post) }
-						)
+								post => { return this.returnTitle(post) }
+							)
 					}
 				</ul>
 			</div>
 		);
 	}
 }
-export default HomePage
+
+function mapStateToProps({ app }) {
+	return {
+		posts: app.posts,
+	};
+}
+
+
+export default connect(mapStateToProps, { ...appActions })(HomePage);
