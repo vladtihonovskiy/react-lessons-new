@@ -14,10 +14,6 @@ class HomePage extends Component {
 		posts: []
 	}
 
-	componentDidMount() {
-		this.props.fetchAllData();
-	}
-
 	returnTitle = (obj) => {
 		const { title, id } = obj;
 

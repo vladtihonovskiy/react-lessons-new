@@ -8,6 +8,7 @@ import About from "./containers/About";
 import HomePage from "./containers/Home";
 import HomePageWithId from "./containers/HomePageWithId";
 import LoaderRedux from "./containers/LoaderRedux/LoaderRedux";
+import UserPage from "./containers/UserPage";
 
 import Loader from './containers/Loader';
 import * as appActions from "./modules/app/app.actions";
@@ -19,25 +20,10 @@ class App extends Component {
 		isLoading: true
 	}
 
-	async componentDidMount() {
-		// console.log(this.props.location);
-		// console.log(
-		//     fetch('https://jsonplaceholder.typicode.com/todos/')
-		//         .then(response => response.json())
-		//         .then(json => this.setState({
-		//             isLoading: false,
-		//             JsonMes: json
-		//         }))
-		// );
-		let result = await fetch('https://jsonplaceholder.typicode.com/posts/');
-		result = await result.json();
-		this.setState({
-			posts: result,
-			isLoading: false,
-		});
-
-		console.log('Запрос отправлен ?');
+	componentDidMount() {
+		this.props.fetchAllData();
 	}
+
 	renderLoader =() => {
 		const { loading } = this.props;
 
@@ -55,6 +41,8 @@ class App extends Component {
 						<Switch>
 							<Route exact path={"/"} component={LoaderRedux} />
 							<Route exact path={"/homepage"} component={HomePage} />
+							<Route exact path={"/homepage/:id"} component={HomePageWithId} />
+							<Route exact path={"/user"} component={UserPage} />
 							<Route path={"/about"} component={About} />
 						</Switch>
 				</Fragment>

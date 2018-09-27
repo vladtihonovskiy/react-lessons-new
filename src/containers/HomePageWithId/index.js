@@ -1,68 +1,30 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import { Link } from 'react-router-dom';
 import Loader from '../Loader';
-import { array } from "prop-types";
+import { array, bool } from "prop-types";
 import "./index.css"
+import {connect} from "react-redux";
+import * as appActions from "../../modules/app/app.actions";
 class HomePageWithId extends Component {
 	static propTypes = {
-		post: array.isRequired
+		posts: array.isRequired,
+		loading: bool
 	}
-	// state = {
-	// 	jsonMass: [],
-	// 	isLoading: true
-	//
-	// }
 
-	// async componentDidMount() {
-	// 	const id = this.props.match.params.id;
-	// 	const resultToMap = new Array();
-	//
-	// 	let result = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-	// 	result = await result.json();
-	//
-	// 	this.setState({
-	// 		siLoading: false
-	// 	});
-	//
-	// 	resultToMap.push(result);
-	//
-	// 	this.setState({
-	// 		jsonMass: resultToMap,
-	// 		isLoading: false
-	// 	});
-	//
-	// 	console.log('Запрос отправлен ?');
-	// }
+	static defaultProps = {
+		posts: []
+	}
 
-	render() {
-		const { post } = this.props;
 
-		const { id, title, body } = post;
-		console.log(this.props);
-		return(
-			<div>
-				{/*{*/}
-					{/*isLoading ?*/}
-						{/*<Loader />*/}
-						{/*:*/}
-						{/*this.state.jsonMass.map((item) => {*/}
-							{/*return(*/}
-								{/*<div key={item.id} className={"post-wrapper"} >*/}
-									{/*<h1 >{ item.title }</h1>*/}
-									{/*<h4>{ item.body }</h4>*/}
+	renderItem = () => {
+		const { posts } = this.props;
+		const postId = this.props.match.params.id - 1;
 
-									{/*<button>*/}
-										{/*<Link to='/homepage'>*/}
-											{/*Back to homepage*/}
-										{/*</Link>*/}
-									{/*</button>*/}
-								{/*</div>*/}
-							{/*)*/}
-						{/*})*/}
-				{/*}*/}
+		const {id, title, body} = posts[postId];
 
-				<div key={id} className={"post-wrapper"} >
-					<h1 >{ title }</h1>
+		return (
+				<div key={ id } className={"post-wrapper"}>
+					<h1>{ title }</h1>
 					<h4>{ body }</h4>
 
 					<button>
@@ -71,8 +33,28 @@ class HomePageWithId extends Component {
 						</Link>
 					</button>
 				</div>
-			</div>
+		);
+	}
+
+	render() {
+		const { loading } = this.props;
+
+		return (
+			<Fragment>
+				{
+					!loading &&
+					this.renderItem()
+				}
+			</Fragment>
 		);
 	}
 }
-export default HomePageWithId
+
+function mapStateToProps({ app }) {
+	return {
+		posts: app.posts,
+		loading: app.loading
+	};
+}
+
+export default connect(mapStateToProps, { ...appActions })(HomePageWithId);

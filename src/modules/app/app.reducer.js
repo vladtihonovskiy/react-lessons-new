@@ -4,11 +4,13 @@ import * as appActions from "./app.actions";
 
 
 const initialState = {
-	loading: false,
+	loading: true,
 	name: "",
 	posts:[],
 	fetchAllDataStatus: "",
 	failureMessage: "",
+	fetchUserDataStatus: "",
+	user:[]
 };
 
 const reducer = {
@@ -40,6 +42,23 @@ const reducer = {
 	[appActions.fetchAllDataFailure]: (state, failure) => ({
 		...state,
 		fetchAllDataStatus: "failure",
+		failureMessage: failure
+	}),
+
+	[appActions.fetchUserStart]: (state) => ({
+		...state,
+		fetchUserDataStatus: "pending"
+	}),
+
+	[appActions.fetchUserSuccess]: (state, data) => ({
+		...state,
+		fetchUserDataStatus: "success",
+		user: data,
+	}),
+
+	[appActions.fetchUserFailure]: (state, failure) => ({
+		...state,
+		fetchUserDataStatus: "failure",
 		failureMessage: failure
 	}),
 };

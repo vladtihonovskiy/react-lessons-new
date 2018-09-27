@@ -20,7 +20,6 @@ export const fetchAllData = () => async(dispatch, getState) => {
 			dispatch(fetchAllDataFailure("Not found page"));
 		}else {
 			result = await result.json();
-			console.log(result);
 			dispatch(fetchAllDataSuccess(result));
 			dispatch(hideLoader());
 		}
@@ -29,21 +28,30 @@ export const fetchAllData = () => async(dispatch, getState) => {
 		dispatch(fetchAllDataFailure(e));
 		dispatch(hideLoader());
 	}
+};
 
-	// return api.auth.registration(firstName, lastName, email, password)
-	// .then((response) => {
-	// 	const user = {
-	// 		email: response.data.email,
-	// 		first_name: response.data.first_name,
-	// 		last_name: response.data.last_name,
-	// 	};
-	//
-	// 	dispatch(registrationSuccess(user));
-	// 	dispatch(addToLocalStorage("user", user));
-	// })
-	// .catch((error) => {
-	// 	const errorText = error.response.data.errorMessage;
-	// 	dispatch(registrationFailure(errorText));
-	// 	dispatch(errorMessage({ text: errorText }));
-	// });
+
+export const fetchUserStart =  createAction("fetch user start");
+export const fetchUserSuccess =  createAction("fetch user success");
+export const fetchUserFailure =  createAction("fetch user failure");
+
+
+export const fetchUser = (id) => async(dispatch, getState) => {
+	dispatch(showLoader());
+	dispatch(fetchUserStart());
+	try {
+
+		let result = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+		if(result.status === 404) {
+			dispatch(fetchUserFailure("Not found page"));
+		}else {
+			result = await result.json();
+			dispatch(fetchUserSuccess(result));
+			dispatch(hideLoader());
+		}
+	}
+	catch (e) {
+		dispatch(fetchUserFailure(e));
+		dispatch(hideLoader());
+	}
 };
