@@ -28,7 +28,7 @@ const reducer = {
 		loading: value
 	}),
 
-	[appActions.fetchAllDataStart]: (state) => ({
+	[appActions.fetchAllDataSaga]: (state) => ({
 		...state,
 		fetchAllDataStatus: "pending"
 	}),
@@ -45,7 +45,7 @@ const reducer = {
 		failureMessage: failure
 	}),
 
-	[appActions.fetchUserStart]: (state) => ({
+	[appActions.fetchUserSaga]: (state) => ({
 		...state,
 		fetchUserDataStatus: "pending"
 	}),

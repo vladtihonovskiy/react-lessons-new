@@ -28,7 +28,7 @@ class UserPage extends Component {
 	onSubmitBtnClick = () => {
 		const { inputNumber } = this.state;
 
-		this.props.fetchUser(inputNumber);
+		this.props.fetchUserSaga(inputNumber);
 	}
 
 
