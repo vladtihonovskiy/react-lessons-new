@@ -28,6 +28,8 @@
     "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "error-overlay-webpack-plugin": "^0.1.5",
     "install": "^0.12.1",
     "npm": "^6.4.1",
     "react": "^16.5.2",
