@@ -1,0 +1,27 @@
+ .user {
+     display: flex;
+     padding: 5px 15px;
+     align-items: center;
+     border-top-style: dotted;
+     border-bottom-style: dotted;
+     margin-bottom: 15px;
+     margin-top: 15px;
+
+     &__image-wrapper {
+         width: 30%;
+         margin-right: 15px;
+
+         img {
+             width: 100%;
+             border-radius: 50%;
+         }
+     }
+
+     &__description {
+         white-space: nowrap; /* Запрещаем перенос строк */
+         overflow: hidden; /* Обрезаем все, что не помещается в область */
+         padding: 5px; /* Поля вокруг текста */
+         text-overflow: ellipsis; /* Добавляем многоточие */
+         max-width: 85%;
+     }
+}
