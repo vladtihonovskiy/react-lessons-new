@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import NavBar from "./components/NavBar/NavBar";
+import UserDetails from "./components/UserDetails/UserDetails";
 
 import classes from './App.less';
 
@@ -16,14 +17,7 @@ class App extends Component {
 				<LoaderContainer />
                 <NavBar />
                 <div className={classes.appContainer}>
-                    123123123123123
-
-					<button onClick={()=> {
-						loader.show();
-					}}>Show</button>
-					<button onClick={()=> {
-						loader.hide();
-					}}>Hide</button>
+					<UserDetails />
                 </div>
             </div>
     );

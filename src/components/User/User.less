@@ -7,6 +7,12 @@
      margin-bottom: 15px;
      margin-top: 15px;
 
+     transition: 0.5s;
+
+     &:hover {
+         cursor: pointer;
+     }
+
      &__image-wrapper {
          width: 30%;
          margin-right: 15px;
@@ -24,4 +30,7 @@
          text-overflow: ellipsis; /* Добавляем многоточие */
          max-width: 85%;
      }
+}
+.selected {
+    background-color: deepskyblue;
 }

@@ -1,38 +1,77 @@
 import React, { Component } from 'react';
 
+import { connect } from "react-redux";
+
+import { array, func } from "prop-types";
+
 import { FormGroup, FormControl, Glyphicon  } from "react-bootstrap";
 import User from "../User/User";
 import classes from './NavBar.less';
-import {apiUrl} from "../../constants/config";
+import { apiUrl } from "../../constants/config";
+
+import * as userActions from "../../modules/user/user.actions";
 
 class NavBar extends Component {
 
 	state = {
-		usersData: []
+		selectedBlockId: null,
+		searchInput: ""
+	}
+
+	static propTypes = {
+		usersData: array,
+		getAllUserSaga: func,
+		selectUser: func,
+		unselectUser: func
 	}
 
 	componentDidMount() {
-		fetch(`${apiUrl}/getAllUsers`, {
-			method: 'post',
-		}).then((response) => {
-			return response.json();
-		}).then((data) => {
-			console.log(data);
-			this.setState({
-				usersData: data
-			})
-		});
+		this.props.getAllUserSaga();
 	}
 
+	onInputChange = (event) => {
+		console.log(event);
+		this.setState({
+			searchInput: event.target.value
+		})
+	}
+
+	onUserClick = (index) => {
+		if (index !== this.state.selectedBlockId) {
+			this.props.selectUser(index);
+
+			this.setState({
+				selectedBlockId: index
+			});
+		}else if(index === this.state.selectedBlockId) {
+			this.props.unselectUser(index);
+
+			this.setState({
+				selectedBlockId: null
+			})
+		}else {
+			this.props.unselectUser(index);
+			this.setState({
+				selectedBlockId: null
+			})
+		}
+	}
 
 	render() {
-		const { usersData } = this.state;
+		const { usersData } = this.props;
+
+		const { selectedBlockId, searchInput } = this.state;
+
+		const filteredValue = searchInput === "" ?
+			usersData
+			:
+			usersData.filter(element => element.general.firstName.indexOf(searchInput) !== -1);
 
 		return (
 				<div className={classes.navBar}>
 					<div className={classes.navBarInputWrapper}>
 						<p className={classes.navBarInputLabel}> Поиск </p>
-						<FormGroup className={classes.navBarInput}>
+						<FormGroup onChange={this.onInputChange} className={classes.navBarInput}>
 							<FormControl type="text" />
 							<FormControl.Feedback>
 								<Glyphicon glyph="search" />
@@ -40,8 +79,13 @@ class NavBar extends Component {
 						</FormGroup>
 					</div>
 
-					{ usersData.map((user) => {
-						return <User userData={user}/>
+					{ filteredValue.map((user, index) => {
+						return <User key={index}
+									 onUserClick={this.onUserClick}
+									 userData={user}
+									 index={index}
+									 selectedBlockId={selectedBlockId}
+								/>
 					})
 					}
 				</div>
@@ -49,4 +93,11 @@ class NavBar extends Component {
 	}
 }
 
-export default NavBar;
+
+function mapStateToProps({ user }) {
+	return {
+		usersData: user.users
+	};
+}
+
+export default connect(mapStateToProps, { ...userActions })(NavBar);
