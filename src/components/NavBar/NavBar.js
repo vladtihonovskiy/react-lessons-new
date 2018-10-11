@@ -37,6 +37,8 @@ class NavBar extends Component {
 	}
 
 	onUserClick = (index) => {
+
+		debugger;
 		if (index !== this.state.selectedBlockId) {
 			this.props.selectUser(index);
 
@@ -65,7 +67,9 @@ class NavBar extends Component {
 		const filteredValue = searchInput === "" ?
 			usersData
 			:
-			usersData.filter(element => element.general.firstName.indexOf(searchInput) !== -1);
+			usersData.filter(element => element.general.firstName.toLowerCase().indexOf(searchInput) !== -1);
+
+
 
 		return (
 				<div className={classes.navBar}>
@@ -79,11 +83,11 @@ class NavBar extends Component {
 						</FormGroup>
 					</div>
 
-					{ filteredValue.map((user, index) => {
-						return <User key={index}
+					{ filteredValue.map((user) => {
+						return <User key={user._id}
 									 onUserClick={this.onUserClick}
 									 userData={user}
-									 index={index}
+									 index={user._id}
 									 selectedBlockId={selectedBlockId}
 								/>
 					})

@@ -4,7 +4,6 @@ import { takeEvery, put, select } from "redux-saga/effects";
 
 // import customToastify from "../../customFunction/customToastify";
 import { postRequest } from "../../api";
-import { loader } from "../../components/Loader/Loader";
 
 function *getAllUser() {
 	try {

@@ -6,11 +6,16 @@ import usersRouter from "./routers/users";
 
 var docs = require("express-mongoose-docs");
 
+import Models from "./models";
+
 const bodyParser = require('body-parser');
 
 const cors = require('cors');
 
 const express = require('express');
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/inCodeTest');
 
 // const DatabaseObject = new Database();
 
